@@ -11,7 +11,7 @@ var mongoose = require('mongoose')
 var Book = require("./models/BookModel")
 var Person = require("./models/PersonModel")
 
-mongoose.connect("mongodb://localhost/mongoose-practice")
+mongoose.connect("mongodb://127.0.0.1/mongoose-practice")
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -30,7 +30,7 @@ for (var i = 0; i < isbns.length; i++) {
   for subsequent runs, re-comment it so that it runs only once!
   that said, there is a fail-safe to avoid duplicates below
   =======================================================*/
-  loadFromAPI(apiURL)
+  //loadFromAPI(apiURL)
 }
 console.log("done");
 
@@ -137,7 +137,55 @@ app.listen(3000, function() {
   console.log("Server up and running on port 3000")
 })
 
+// BOOK
+/**EX-1 */
+// Book.find({
+//   $and:[
+//     {pages: {$lt : 500}},
+//     {pages: {$gt: 200}}
+//   ]
+// }, function(err, res){
+//   console.log(res)
+// })
 
+/**EX-2 */
+// Book.find({
+//   rating: {$lt : 5}
+// }).sort({author: 1}).exec(function(err, res){
+//   console.log(res)
+// })
+
+//PERSON
+//EX-1
+// Person.find({
+//   $and:[
+//     {height: {$gt: 180}},
+//     {salary: {$gt: 30000}}
+//   ]
+// }, function (err, res) {
+//   console.log(res)
+// })
+// //EX2
+// Person.find({
+//   $or:[
+//     {height: {$gt: 180}},
+//     {salary: {$gt: 30000}}
+//   ]
+// }, function (err, res) {
+//   console.log(res)
+// })
+//EX3
+Person.find({
+  $and:[
+    {$or:[
+      {hair: "grey"},
+      {eyes: "grey"}
+    ]},
+    {weight: {$lt: 70}}
+  ]
+}, function (err, res) {
+  console.log(res)
+})
 /*=====================================================
 Exercises - now that your databases are full
 and your server is running do the following:
